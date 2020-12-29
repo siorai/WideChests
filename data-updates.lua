@@ -1,4 +1,5 @@
 require("init")
+require("utils")
 require("prototypes.entity")
 require("prototypes.groups")
 require("prototypes.item")

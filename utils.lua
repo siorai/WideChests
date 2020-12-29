@@ -1,6 +1,4 @@
-function string.starts_with(String, Start)
-   return string.sub(String, 1, string.len(Start)) == Start
-end
+require "util"
 
 function math.round(num)
 	if num >= 0 then
@@ -10,11 +8,18 @@ function math.round(num)
 	end
 end
 
-function string.split(str, sep)
-   local sep, fields = sep or ":", { }
-   local pattern = string.format("([^%s]+)", sep)
-   string.gsub(str, pattern, function(c) fields[#fields+1] = c end)
-   return fields
+function math.gcd(num1, num2)
+	if num1 == num2 then
+		return num1
+	elseif num1 > num2 then
+		return math.gcd(num1 - num2, num2)
+	else
+		return math.gcd(num1, num2 - num1)
+	end
+end
+
+function math.lcm(num1, num2)
+	return num1 * num2 / math.gcd(num1, num2)
 end
 
 function table.unpack(t, i)

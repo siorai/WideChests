@@ -1,18 +1,18 @@
 require("init")
-require("util")
+require("utils")
 
 function MergingChests.GetChestSize(data, entity)
 	if entity.name == data.id then
 		return 1, 1
-	elseif string.starts_with(entity.name, "wide-"..data.id) then
-		return tonumber(string.sub(entity.name, string.len("wide-"..data.id.."-") + 1)), 1
-	elseif string.starts_with(entity.name, "high-"..data.id) then
-		return 1, tonumber(string.sub(entity.name,  string.len("high-"..data.id.."-") + 1))
-	elseif string.starts_with(entity.name, data.type.."-warehouse-") then
-		local width, height = table.unpack(string.split(string.sub(entity.name, string.len(data.type.."-warehouse-") + 1), "x"))
+	elseif util.string_starts_with(entity.name, "wide-"..data.type.."-chest") then
+		return tonumber(string.sub(entity.name, string.len("wide-"..data.type.."-chest-") + 1)), 1
+	elseif util.string_starts_with(entity.name, "high-"..data.type.."-chest") then
+		return 1, tonumber(string.sub(entity.name, string.len("high-"..data.type.."-chest-") + 1))
+	elseif util.string_starts_with(entity.name, data.type.."-warehouse-") then
+		local width, height = table.unpack(util.split(string.sub(entity.name, string.len(data.type.."-warehouse-") + 1), "x"))
 		return tonumber(width), tonumber(height)
-	elseif string.starts_with(entity.name, data.type.."-trashdump-") then
-		local width, height = table.unpack(string.split(string.sub(entity.name, string.len(data.type.."-trashdump-") + 1), "x"))
+	elseif util.string_starts_with(entity.name, data.type.."-trashdump-") then
+		local width, height = table.unpack(util.split(string.sub(entity.name, string.len(data.type.."-trashdump-") + 1), "x"))
 		return tonumber(width), tonumber(height)
 	else
 		return 0, 0
@@ -57,10 +57,27 @@ function MergingChests.MoveInventories(from, to)
 	local remainingBar = bar
 	local remainingEntites = #to
 	for _, entity in ipairs(to) do
-		local singleBar = math.round(remainingBar / remainingEntites)
+		local singleBar = math.min(math.round(remainingBar / remainingEntites), 65535)
 		entity.get_inventory(1).set_bar(singleBar + 1)
 		remainingBar = remainingBar - singleBar
 		remainingEntites = remainingEntites - 1
+	end
+end
+
+function MergingChests.MoveLogisticRequests(from, to)
+	local to_index = 1
+	
+	for _, entity_from in ipairs(from) do
+		for from_slot_index = 1, entity_from.request_slot_count do
+			local request = entity_from.get_request_slot(from_slot_index)
+			if request then
+				to[to_index].set_request_slot(request, to[to_index].request_slot_count + 1)
+				to_index = to_index + 1
+				if to_index > #to then
+					to_index = 1
+				end
+			end
+		end
 	end
 end
 
@@ -153,7 +170,7 @@ function MergingChests.SortIntoGroups(data, entities)
 	repeat
 		merged = false
 		
-		local xStart, yStart, width, height = MergingChests.FindLargestChest(chestMap, mapBounds)
+		local xStart, yStart, width, height = MergingChests.FindLargestChest(data, chestMap, mapBounds)
 		
 		if width > 1 or height > 1 then
 			-- fill new group and used entities remove from map
@@ -174,7 +191,7 @@ function MergingChests.SortIntoGroups(data, entities)
 	return groups
 end
 
-function MergingChests.FindLargestChest(map, area)
+function MergingChests.FindLargestChest(chestData, map, area)
 	local maxX = 0
 	local maxY = 0
 	local maxWidth = 0
@@ -190,7 +207,7 @@ function MergingChests.FindLargestChest(map, area)
 			end
 		end
 		
-		local y, width, height = MergingChests.FindLargestAreaUnderHistogram(row, area.minY, area.maxY)
+		local y, width, height = MergingChests.FindLargestAreaUnderHistogram(chestData, row, area.minY, area.maxY)
 		
 		if width * height > maxWidth * maxHeight then
 			maxX = x - width + 1
@@ -203,7 +220,7 @@ function MergingChests.FindLargestChest(map, area)
 	return maxX, maxY, maxWidth, maxHeight
 end
 
-function MergingChests.FindLargestAreaUnderHistogram(row, min, max)
+function MergingChests.FindLargestAreaUnderHistogram(chestData, row, min, max)
 	local maxY = 0
 	local maxWidth = 0
 	local maxHeight = 0
@@ -220,7 +237,7 @@ function MergingChests.FindLargestAreaUnderHistogram(row, min, max)
 		local width = row[peak + min]
 		local height = top == 0 and y or (y - stack[top] - 1)
 
-		if maxWidth * maxHeight < width * height and MergingChests.CheckWhitelist(width, height) then
+		if maxWidth * maxHeight < width * height and MergingChests.CheckWhitelist(chestData.id, width, height) then
 			maxY = y + min - height
 			maxWidth = width
 			maxHeight = height
@@ -289,6 +306,9 @@ function MergingChests.OnPlayerSelectedArea(event)
 					local newChest = MergingChests.CreateMergedChest(data, group, player)
 					
 					MergingChests.MoveInventories(group.entities, { newChest })
+					if data.logistic then
+						MergingChests.MoveLogisticRequests(group.entities, { newChest })
+					end
 					MergingChests.ReconnectCircuits(group.entities, { newChest })
 					
 					for _, entity in ipairs(group.entities) do
@@ -314,6 +334,9 @@ function MergingChests.OnPlayerAltSelectedArea(event)
 					local newEntities = MergingChests.CreateSplitedChests(data, entity, player)
 					
 					MergingChests.MoveInventories({ entity }, newEntities)
+					if data.logistic then
+						MergingChests.MoveLogisticRequests({ entity }, newEntities)
+					end
 					MergingChests.ReconnectCircuits({ entity }, newEntities)
 					
 					table.remove(entities, i)

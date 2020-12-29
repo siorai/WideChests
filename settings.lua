@@ -2,7 +2,9 @@ require("init-settings")
 
 local allowedChestNames = { }
 for _, data in pairs(MergingChests.MergableChestIdToData) do
-	table.insert(allowedChestNames, data.name)
+	if data.name then
+		table.insert(allowedChestNames, data.name)
+	end
 end
 
 data:extend(
