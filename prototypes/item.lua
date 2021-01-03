@@ -1,3 +1,15 @@
+local filters
+if MergingChests.CheckMod(MergingChests.LogisticModName) then
+	filters = {
+		"logistic-container",
+		"container"
+	}
+else
+	filters = {
+		"container"
+	}
+end
+
 data:extend({
 	{
 		type = "selection-tool",
@@ -17,9 +29,6 @@ data:extend({
 		selection_cursor_box_type = "entity",
 		alt_selection_cursor_box_type = "entity",
 		entity_filters = MergingChests.MergableChestIds,
-		alt_entity_type_filters = 
-		{
-			"container"
-		}
+		alt_entity_type_filters = filters
 	}
 })

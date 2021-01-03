@@ -1,4 +1,13 @@
 ﻿---------------------------------------------------------------------------------------------------
+Version: 3.3.0
+Date: 30.12.2020
+  Major features:
+    - Added possibility to merge logistic chests (only single line wide/high). This feature is enabled when you have "WideChestsLogistic" mod enabled. Beware of long loading time and higher memory usage.
+  Dependencies:
+    - Added optional dependency on WideChestsLogistic
+  Bugfix:
+    - Fixed missing limit of red bar during merge of large chests
+---------------------------------------------------------------------------------------------------
 Version: 3.2.1
 Date: 26.11.2020
   Info:

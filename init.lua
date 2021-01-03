@@ -1,7 +1,7 @@
 require("init-settings")
 
 function MergingChests.Limits()
-	if (mods or script.active_mods)["WideChestsUnlimited"] then
+	if MergingChests.CheckMod(MergingChests.UnlimitedModName) then
 		return {
 			width = settings.startup["max-chest-width"].value,
 			height = settings.startup["max-chest-height"].value,
@@ -17,16 +17,20 @@ function MergingChests.Limits()
 end
 
 MergingChests.MergableChestIds = { }
-if (mods or script.active_mods)["WideChestsAllTypes"] then
-	for _, data in pairs(MergingChests.MergableChestIdToData) do
+for _, data in pairs(MergingChests.MergableChestIdToData) do
+	if (
+		not data.logistic and
+		(
+			MergingChests.CheckMod(MergingChests.AllTypesModName) or
+			settings.startup["mergable-chest-name"].value == data.name
+		)
+	) or 
+	(
+		data.logistic and
+		MergingChests.CheckMod(MergingChests.LogisticModName)
+	) then
 		table.insert(MergingChests.MergableChestIds, data.id)
 	end
-else
-	local nameToId = { }
-	for _, data in pairs(MergingChests.MergableChestIdToData) do
-		nameToId[data.name] = data.id
-	end
-	table.insert(MergingChests.MergableChestIds, nameToId[settings.startup["mergable-chest-name"].value])
 end
 
 local ANY = "any-size"
@@ -52,13 +56,22 @@ function parseWhitelist()
 	end
 end
 
-function MergingChests.CheckWhitelist(width, height)
+MergingChests.AreaChests = {
+	["wooden-chest"] = true,
+	["iron-chest"] = true,
+	["steel-chest"] = true,
+	["brass-chest"] = true,
+	["titanium-chest"] = true
+}
+
+function MergingChests.CheckWhitelist(id, width, height)
 	if chestWhitelist == nil then
 		parseWhitelist()
 	end
 
 	local limits = MergingChests.Limits()
 	return
+		(MergingChests.AreaChests[id] or width == 1 or height == 1) and
 		width * height <= limits.area and
 		width <= limits.width and
 		height <= limits.height and
