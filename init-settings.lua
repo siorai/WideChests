@@ -142,3 +142,24 @@ if MergingChests.CheckMod("DyWorld-Dynamics") then
 		}
 	}
 end
+
+if MergingChests.CheckMod("nullius") then
+	MergingChests.MergableChestIdToData["nullius-small-chest-1"] = {
+		id = "nullius-small-chest-1",
+		name = "Nullius Small Storage Chest 1",
+		type = "iron",
+		additional_properties = {
+			icon = "base/graphics/entity/iron-chest/iron-chest.png",
+			icon_size = 32
+		}
+	}
+	MergingChests.MergableChestIdToData["nullius-small-chest-2"] = {
+		id = "nullius-small-chest-2",
+		name = "Nullius Small Storage Chest 2",
+		type = "steel",
+		additional_properties = {
+			icon = "base/graphics/entity/steel-chest/steel-chest.png",
+			icon_size = 32
+		}
+	}
+end
