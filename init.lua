@@ -64,7 +64,9 @@ MergingChests.AreaChests = {
 	["titanium-chest"] = true,
 	["small-storage"] = true,
 	["small-storage-2"] = true,
-	["small-storage-3"] = true
+	["small-storage-3"] = true,
+	["nullius-small-chest-1"] = true,
+	["nullius-small-chest-2"] = true
 }
 
 function MergingChests.CheckWhitelist(id, width, height)
