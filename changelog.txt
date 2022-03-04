@@ -1,4 +1,11 @@
-﻿Version: 3.6.0
+﻿Version: 4.0.0
+Date: 4.3.2022
+  Breaking change:
+    - Fixed type of chest placed when splitting Bob/Dyworld chests. This unfortunately means that all previously merged Bob/Dyworld chests are going to disappear. For Bob chests it is possible to first split the chests before installing this update, but there's no such fix for Dyworld chests.
+  Bugfix:
+    - Fixed support for Nullius chests.
+---------------------------------------------------------------------------------------------------
+Version: 3.6.0
 Date: 3.3.2022
   Features:
     - Added support for Nullius chests.
