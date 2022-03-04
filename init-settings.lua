@@ -6,6 +6,8 @@ MergingChests.LogisticModName = "WideChestsLogistic"
 
 MergingChests.BobLogisticModName = "boblogistics"
 MergingChests.BobPlatesModName = "bobplates"
+MergingChests.DyWorldModName = "DyWorld-Dynamics"
+MergingChests.NulliusModName = "nullius"
 
 function MergingChests.CheckMod(mod)
 	return (mods or script.active_mods)[mod]
@@ -40,63 +42,65 @@ MergingChests.MergableChestIdToData["steel-chest"] = {
 	}
 }
 
-MergingChests.MergableChestIdToData["logistic-chest-passive-provider"] = {
-	id = "logistic-chest-passive-provider",
-	type = "logistic-passive",
-	logistic = true,
-	additional_properties = {
-		icon = "__base__/graphics/icons/logistic-chest-passive-provider.png",
-		icon_size = 64,
-		logistic_mode = "passive-provider"
+if MergingChests.CheckMod(MergingChests.LogisticModName) then
+	MergingChests.MergableChestIdToData["logistic-chest-passive-provider"] = {
+		id = "logistic-chest-passive-provider",
+		type = "logistic-passive",
+		logistic = true,
+		additional_properties = {
+			icon = "__base__/graphics/icons/logistic-chest-passive-provider.png",
+			icon_size = 64,
+			logistic_mode = "passive-provider"
+		}
 	}
-}
-MergingChests.MergableChestIdToData["logistic-chest-active-provider"] = {
-	id = "logistic-chest-active-provider",
-	type = "logistic-active",
-	logistic = true,
-	additional_properties = {
-		icon = "__base__/graphics/icons/logistic-chest-active-provider.png",
-		icon_size = 64,
-		logistic_mode = "active-provider"
+	MergingChests.MergableChestIdToData["logistic-chest-active-provider"] = {
+		id = "logistic-chest-active-provider",
+		type = "logistic-active",
+		logistic = true,
+		additional_properties = {
+			icon = "__base__/graphics/icons/logistic-chest-active-provider.png",
+			icon_size = 64,
+			logistic_mode = "active-provider"
+		}
 	}
-}
-MergingChests.MergableChestIdToData["logistic-chest-storage"] = {
-	id = "logistic-chest-storage",
-	type = "logistic-storage",
-	logistic = true,
-	additional_properties = {
-		icon = "__base__/graphics/icons/logistic-chest-storage.png",
-		icon_size = 64,
-		logistic_mode = "storage",
-		max_logistic_slots = 1
+	MergingChests.MergableChestIdToData["logistic-chest-storage"] = {
+		id = "logistic-chest-storage",
+		type = "logistic-storage",
+		logistic = true,
+		additional_properties = {
+			icon = "__base__/graphics/icons/logistic-chest-storage.png",
+			icon_size = 64,
+			logistic_mode = "storage",
+			max_logistic_slots = 1
+		}
 	}
-}
-MergingChests.MergableChestIdToData["logistic-chest-buffer"] = {
-	id = "logistic-chest-buffer",
-	type = "logistic-buffer",
-	logistic = true,
-	additional_properties = {
-		icon = "__base__/graphics/icons/logistic-chest-buffer.png",
-		icon_size = 64,
-		logistic_mode = "buffer"
+	MergingChests.MergableChestIdToData["logistic-chest-buffer"] = {
+		id = "logistic-chest-buffer",
+		type = "logistic-buffer",
+		logistic = true,
+		additional_properties = {
+			icon = "__base__/graphics/icons/logistic-chest-buffer.png",
+			icon_size = 64,
+			logistic_mode = "buffer"
+		}
 	}
-}
-MergingChests.MergableChestIdToData["logistic-chest-requester"] = {
-	id = "logistic-chest-requester",
-	type = "logistic-requester",
-	logistic = true,
-	additional_properties = {
-		icon = "__base__/graphics/icons/logistic-chest-requester.png",
-		icon_size = 64,
-		logistic_mode = "requester"
+	MergingChests.MergableChestIdToData["logistic-chest-requester"] = {
+		id = "logistic-chest-requester",
+		type = "logistic-requester",
+		logistic = true,
+		additional_properties = {
+			icon = "__base__/graphics/icons/logistic-chest-requester.png",
+			icon_size = 64,
+			logistic_mode = "requester"
+		}
 	}
-}
+end
 
 if MergingChests.CheckMod(MergingChests.BobLogisticModName) and MergingChests.CheckMod(MergingChests.BobPlatesModName) then
 	MergingChests.MergableChestIdToData["brass-chest"] = {
 		id = "brass-chest",
 		name = "Brass Chest",
-		type = "brass",
+		type = "bob-brass",
 		additional_properties = {
 			icon = "__boblogistics__/graphics/icons/brass-chest.png",
 			icon_size = 32
@@ -105,7 +109,7 @@ if MergingChests.CheckMod(MergingChests.BobLogisticModName) and MergingChests.Ch
 	MergingChests.MergableChestIdToData["titanium-chest"] = {
 		id = "titanium-chest",
 		name = "Titanium Chest",
-		type = "titanium",
+		type = "bob-titanium",
 		additional_properties = {
 			icon = "__boblogistics__/graphics/icons/titanium-chest.png",
 			icon_size = 32
@@ -113,11 +117,11 @@ if MergingChests.CheckMod(MergingChests.BobLogisticModName) and MergingChests.Ch
 	}
 end
 
-if MergingChests.CheckMod("DyWorld-Dynamics") then
+if MergingChests.CheckMod(MergingChests.DyWorldModName) then
 	MergingChests.MergableChestIdToData["small-storage"] = {
 		id = "small-storage",
 		name = "DyWorld Wood Storage Chest",
-		type = "wood",
+		type = "dyworld-small-1",
 		additional_properties = {
 			icon = "__base__/graphics/entity/wooden-chest/wooden-chest.png",
 			icon_size = 32
@@ -126,7 +130,7 @@ if MergingChests.CheckMod("DyWorld-Dynamics") then
 	MergingChests.MergableChestIdToData["small-storage-2"] = {
 		id = "small-storage-2",
 		name = "DyWorld Iron Storage Chest",
-		type = "iron",
+		type = "dyworld-small-2",
 		additional_properties = {
 			icon = "__base__/graphics/entity/iron-chest/iron-chest.png",
 			icon_size = 32
@@ -135,7 +139,7 @@ if MergingChests.CheckMod("DyWorld-Dynamics") then
 	MergingChests.MergableChestIdToData["small-storage-3"] = {
 		id = "small-storage-3",
 		name = "DyWorld Steel Storage Chest",
-		type = "steel",
+		type = "dyworld-small-3",
 		additional_properties = {
 			icon = "__base__/graphics/entity/steel-chest/steel-chest.png",
 			icon_size = 32
@@ -143,23 +147,136 @@ if MergingChests.CheckMod("DyWorld-Dynamics") then
 	}
 end
 
-if MergingChests.CheckMod("nullius") then
+if MergingChests.CheckMod(MergingChests.NulliusModName) then
 	MergingChests.MergableChestIdToData["nullius-small-chest-1"] = {
 		id = "nullius-small-chest-1",
 		name = "Nullius Small Storage Chest 1",
-		type = "iron",
+		type = "nullius-small-1",
 		additional_properties = {
-			icon = "base/graphics/entity/iron-chest/iron-chest.png",
+			icon = "__base__/graphics/entity/iron-chest/iron-chest.png",
 			icon_size = 32
 		}
 	}
 	MergingChests.MergableChestIdToData["nullius-small-chest-2"] = {
 		id = "nullius-small-chest-2",
 		name = "Nullius Small Storage Chest 2",
-		type = "steel",
+		type = "nullius-small-2",
 		additional_properties = {
-			icon = "base/graphics/entity/steel-chest/steel-chest.png",
+			icon = "__base__/graphics/entity/steel-chest/steel-chest.png",
 			icon_size = 32
 		}
 	}
+	MergingChests.MergableChestIdToData["nullius-small-chest-3"] = {
+		id = "nullius-small-chest-3",
+		name = "Nullius Small Storage Chest 3",
+		type = "nullius-small-3",
+		additional_properties = {
+			icon = "__base__/graphics/entity/steel-chest/steel-chest.png",
+			icon_size = 32
+		}
+	}
+	if MergingChests.CheckMod(MergingChests.LogisticModName) then
+		MergingChests.MergableChestIdToData["nullius-small-supply-chest-1"] = {
+			id = "nullius-small-supply-chest-1",
+			type = "nullius-small-logistic-passive-1",
+			logistic = true,
+			additional_properties = {
+				icon = "__base__/graphics/icons/logistic-chest-passive-provider.png",
+				icon_size = 64,
+				logistic_mode = "passive-provider"
+			}
+		}
+		MergingChests.MergableChestIdToData["nullius-small-supply-chest-2"] = {
+			id = "nullius-small-supply-chest-2",
+			type = "nullius-small-logistic-passive-2",
+			logistic = true,
+			additional_properties = {
+				icon = "__base__/graphics/icons/logistic-chest-passive-provider.png",
+				icon_size = 64,
+				logistic_mode = "passive-provider"
+			}
+		}
+		MergingChests.MergableChestIdToData["nullius-small-dispatch-chest-1"] = {
+			id = "nullius-small-dispatch-chest-1",
+			type = "nullius-small-logistic-active-1",
+			logistic = true,
+			additional_properties = {
+				icon = "__base__/graphics/icons/logistic-chest-active-provider.png",
+				icon_size = 64,
+				logistic_mode = "active-provider"
+			}
+		}
+		MergingChests.MergableChestIdToData["nullius-small-dispatch-chest-2"] = {
+			id = "nullius-small-dispatch-chest-2",
+			type = "nullius-small-logistic-active-2",
+			logistic = true,
+			additional_properties = {
+				icon = "__base__/graphics/icons/logistic-chest-active-provider.png",
+				icon_size = 64,
+				logistic_mode = "active-provider"
+			}
+		}
+		MergingChests.MergableChestIdToData["nullius-small-storage-chest-1"] = {
+			id = "nullius-small-storage-chest-1",
+			type = "nullius-small-logistic-storage-1",
+			logistic = true,
+			additional_properties = {
+				icon = "__base__/graphics/icons/logistic-chest-storage.png",
+				icon_size = 64,
+				logistic_mode = "storage",
+				max_logistic_slots = 1
+			}
+		}
+		MergingChests.MergableChestIdToData["nullius-small-storage-chest-2"] = {
+			id = "nullius-small-storage-chest-2",
+			type = "nullius-small-logistic-storage-2",
+			logistic = true,
+			additional_properties = {
+				icon = "__base__/graphics/icons/logistic-chest-storage.png",
+				icon_size = 64,
+				logistic_mode = "storage",
+				max_logistic_slots = 1
+			}
+		}
+		MergingChests.MergableChestIdToData["nullius-small-buffer-chest-1"] = {
+			id = "nullius-small-buffer-chest-1",
+			type = "nullius-small-logistic-buffer-1",
+			logistic = true,
+			additional_properties = {
+				icon = "__base__/graphics/icons/logistic-chest-buffer.png",
+				icon_size = 64,
+				logistic_mode = "buffer"
+			}
+		}
+		MergingChests.MergableChestIdToData["nullius-small-buffer-chest-2"] = {
+			id = "nullius-small-buffer-chest-2",
+			type = "nullius-small-logistic-buffer-2",
+			logistic = true,
+			additional_properties = {
+				icon = "__base__/graphics/icons/logistic-chest-buffer.png",
+				icon_size = 64,
+				logistic_mode = "buffer"
+			}
+		}
+		MergingChests.MergableChestIdToData["nullius-small-demand-chest-1"] = {
+			id = "nullius-small-demand-chest-1",
+			type = "nullius-small-logistic-requester-1",
+			logistic = true,
+			additional_properties = {
+				icon = "__base__/graphics/icons/logistic-chest-requester.png",
+				icon_size = 64,
+				logistic_mode = "requester"
+			}
+		}
+		MergingChests.MergableChestIdToData["nullius-small-demand-chest-2"] = {
+			id = "nullius-small-demand-chest-2",
+			type = "nullius-small-logistic-requester-2",
+			logistic = true,
+			additional_properties = {
+				icon = "__base__/graphics/icons/logistic-chest-requester.png",
+				icon_size = 64,
+				logistic_mode = "requester"
+			}
+		}
+	end
 end

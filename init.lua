@@ -19,15 +19,9 @@ end
 MergingChests.MergableChestIds = { }
 for _, data in pairs(MergingChests.MergableChestIdToData) do
 	if (
-		not data.logistic and
-		(
-			MergingChests.CheckMod(MergingChests.AllTypesModName) or
-			settings.startup["mergable-chest-name"].value == data.name
-		)
-	) or 
-	(
-		data.logistic and
-		MergingChests.CheckMod(MergingChests.LogisticModName)
+		MergingChests.CheckMod(MergingChests.AllTypesModName)
+		or data.logistic and MergingChests.CheckMod(MergingChests.LogisticModName)
+		or settings.startup["mergable-chest-name"].value == data.name
 	) then
 		table.insert(MergingChests.MergableChestIds, data.id)
 	end
