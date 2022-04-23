@@ -123,8 +123,8 @@ if MergingChests.CheckMod(MergingChests.DyWorldModName) then
 		name = "DyWorld Wood Storage Chest",
 		type = "dyworld-small-1",
 		additional_properties = {
-			icon = "__base__/graphics/entity/wooden-chest/wooden-chest.png",
-			icon_size = 32
+			icon = "__base__/graphics/icons/wooden-chest.png",
+			icon_size = 64
 		}
 	}
 	MergingChests.MergableChestIdToData["small-storage-2"] = {
@@ -132,8 +132,8 @@ if MergingChests.CheckMod(MergingChests.DyWorldModName) then
 		name = "DyWorld Iron Storage Chest",
 		type = "dyworld-small-2",
 		additional_properties = {
-			icon = "__base__/graphics/entity/iron-chest/iron-chest.png",
-			icon_size = 32
+			icon = "__base__/graphics/icons/iron-chest.png",
+			icon_size = 64
 		}
 	}
 	MergingChests.MergableChestIdToData["small-storage-3"] = {
@@ -141,38 +141,38 @@ if MergingChests.CheckMod(MergingChests.DyWorldModName) then
 		name = "DyWorld Steel Storage Chest",
 		type = "dyworld-small-3",
 		additional_properties = {
-			icon = "__base__/graphics/entity/steel-chest/steel-chest.png",
-			icon_size = 32
+			icon = "__base__/graphics/icons/steel-chest.png",
+			icon_size = 64
 		}
 	}
 end
 
 if MergingChests.CheckMod(MergingChests.NulliusModName) then
 	MergingChests.MergableChestIdToData["nullius-small-chest-1"] = {
-		id = "nullius-small-chest-1",
+		id = "wooden-chest",
 		name = "Nullius Small Storage Chest 1",
 		type = "nullius-small-1",
 		additional_properties = {
-			icon = "__base__/graphics/entity/iron-chest/iron-chest.png",
-			icon_size = 32
+			icon = "__base__/graphics/icons/wooden-chest.png",
+			icon_size = 64
 		}
 	}
 	MergingChests.MergableChestIdToData["nullius-small-chest-2"] = {
-		id = "nullius-small-chest-2",
+		id = "iron-chest",
 		name = "Nullius Small Storage Chest 2",
 		type = "nullius-small-2",
 		additional_properties = {
-			icon = "__base__/graphics/entity/steel-chest/steel-chest.png",
-			icon_size = 32
+			icon = "__base__/graphics/icons/iron-chest.png",
+			icon_size = 64
 		}
 	}
 	MergingChests.MergableChestIdToData["nullius-small-chest-3"] = {
-		id = "nullius-small-chest-3",
+		id = "steel-chest",
 		name = "Nullius Small Storage Chest 3",
 		type = "nullius-small-3",
 		additional_properties = {
-			icon = "__base__/graphics/entity/steel-chest/steel-chest.png",
-			icon_size = 32
+			icon = "__base__/graphics/icons/steel-chest.png",
+			icon_size = 64
 		}
 	}
 	if MergingChests.CheckMod(MergingChests.LogisticModName) then
@@ -187,7 +187,7 @@ if MergingChests.CheckMod(MergingChests.NulliusModName) then
 			}
 		}
 		MergingChests.MergableChestIdToData["nullius-small-supply-chest-2"] = {
-			id = "nullius-small-supply-chest-2",
+			id = "logistic-chest-passive-provider",
 			type = "nullius-small-logistic-passive-2",
 			logistic = true,
 			additional_properties = {
@@ -207,7 +207,7 @@ if MergingChests.CheckMod(MergingChests.NulliusModName) then
 			}
 		}
 		MergingChests.MergableChestIdToData["nullius-small-dispatch-chest-2"] = {
-			id = "nullius-small-dispatch-chest-2",
+			id = "logistic-chest-active-provider",
 			type = "nullius-small-logistic-active-2",
 			logistic = true,
 			additional_properties = {
@@ -228,7 +228,7 @@ if MergingChests.CheckMod(MergingChests.NulliusModName) then
 			}
 		}
 		MergingChests.MergableChestIdToData["nullius-small-storage-chest-2"] = {
-			id = "nullius-small-storage-chest-2",
+			id = "logistic-chest-storage",
 			type = "nullius-small-logistic-storage-2",
 			logistic = true,
 			additional_properties = {
@@ -249,7 +249,7 @@ if MergingChests.CheckMod(MergingChests.NulliusModName) then
 			}
 		}
 		MergingChests.MergableChestIdToData["nullius-small-buffer-chest-2"] = {
-			id = "nullius-small-buffer-chest-2",
+			id = "logistic-chest-buffer",
 			type = "nullius-small-logistic-buffer-2",
 			logistic = true,
 			additional_properties = {
@@ -269,7 +269,7 @@ if MergingChests.CheckMod(MergingChests.NulliusModName) then
 			}
 		}
 		MergingChests.MergableChestIdToData["nullius-small-demand-chest-2"] = {
-			id = "nullius-small-demand-chest-2",
+			id = "logistic-chest-requester",
 			type = "nullius-small-logistic-requester-2",
 			logistic = true,
 			additional_properties = {
